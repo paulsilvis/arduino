@@ -24,7 +24,7 @@ void setup() {
   pinMode(echoPin, INPUT);
 }
 
-static void readDistanceSensor(int&& cm, int&& inches)
+static void readToneSensor(int&& cm, int&& inches)
 { 
   long duration;
   
@@ -49,10 +49,14 @@ static void readDistanceSensor(int&& cm, int&& inches)
 
 
 void loop() {
-  long cm, inches;  // duration in milliseconds
+  long cm, inches;
   
-  readDistanceSensor(cm, inches);
-
+  readToneSensor(cm, inches);
+  if (cm > 10 && cm < 40) {
+    tone(piezoPin, cm*100);
+  } else {
+    noTone(piezoPin);
+  }
   Serial.print(inches);
   Serial.print("in, ");
   Serial.print(cm);
